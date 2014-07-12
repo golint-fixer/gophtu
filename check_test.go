@@ -25,14 +25,14 @@ func Test_assert(t *testing.T) {
 		a   arg
 	}{
 		{"", true, arg{ExpRes: true}},
-		{"check_test.go:40: \"want: '2', got: '3'\"", false,
+		{"check_test.go:41: \"want: '2', got: '3'\"", false,
 			arg{ExpRes: true, Expected: 2, Got: 3}},
-		{"check_test.go:40: \"want: '3', got: '4', err: 'ziemniak'\"", false,
+		{"check_test.go:41: \"want: '3', got: '4', err: 'ziemniak'\"", false,
 			arg{ExpRes: true, Expected: 3, Got: 4, Msg: "ziemniak"}},
-		{"check_test.go:40: \"want: '3', got: '4', Ind: 2 4, err: 'ziemniak'\"",
+		{"check_test.go:41: \"want: '3', got: '4', Ind: 2 4, err: 'ziemniak'\"",
 			false, arg{ExpRes: true, Expected: 3, Got: 4,
 				Msg: "ziemniak", Ind: []int{2, 4}}},
-		{"check_test.go:40: \"want: '3', got: '4', Ind: 3 5\"", false,
+		{"check_test.go:41: \"want: '3', got: '4', Ind: 3 5\"", false,
 			arg{ExpRes: true, Expected: 3, Got: 4, Ind: []int{3, 5}}},
 	}
 
