@@ -48,54 +48,79 @@ func assert(f func(string, ...interface{}), c bool, a arg) {
 			line = 1
 		}
 		// Really shouldn't do that, but wth for now.
+		// It is stripping `file:line` prefix from original testing package.
 		f("\b\b\b\b\b\b\b\b\b\b\b\b\b%s:%d: %q", file, line, b.String())
 	}
 }
 
-// Wrapper for testing.Error.
+// Check is a wrapper for testing.Error. It takes as arguments: pointer to
+// *testing.T object, bool value representing result of test comparison,
+// expected value, received value and optionally indexes for table tests.
 func Check(t *testing.T, c bool, e, r interface{}, ind ...int) bool {
 	assert(t.Errorf, c, arg{e, r, "", []int(ind), true})
 	return c
 }
 
-// Wrapper for testing.Error with possibility to provide custom message.
+// CheckE is a wrapper for testing.Error. It takes as arguments: pointer to
+// *testing.T object, bool value representing result of test comparison,
+// expected value, received value, custom error message
+// and optionally indexes for table tests.
 func CheckE(t *testing.T, c bool, e, r interface{},
 	msg string, ind ...int) bool {
 	assert(t.Errorf, c, arg{e, r, msg, []int(ind), true})
 	return c
 }
 
-// Wrapper for testing.Fatal.
+// Assert is a wrapper for testing.Fatal. It takes as arguments: pointer to
+// *testing.T object, bool value representing result of test comparison,
+// expected value, received value and optionally indexes for table tests.
 func Assert(t *testing.T, c bool, e, r interface{}, ind ...int) {
 	assert(t.Fatalf, c, arg{e, r, "", []int(ind), true})
 }
 
-// Wrapper for testin.Fatal with possibility to provide custom message.
+// AssertE is a wrapper for testing.Fatal. It takes as arguments: pointer to
+// *testing.T object, bool value representing result of test comparison,
+// expected value, received value, custom error message
+// and optionally indexes for table tests.
 func AssertE(t *testing.T, c bool, e, r interface{}, msg string, ind ...int) {
 	assert(t.Fatalf, c, arg{e, r, msg, []int(ind), true})
 }
 
-// Wrapper for testing.Error with message adjusted to not equality.
+// CheckFalse is a wrapper for testing.Error. It is intended for
+// usage when result is expected to be different than specified value.
+// It takes as arguments: pointer to *testing.T object,
+// bool value representing result of test comparison, expected value
+// and optionally indexes for table tests.
 func CheckFalse(t *testing.T, c bool, e interface{}, ind ...int) bool {
 	assert(t.Errorf, c, arg{e, nil, "", []int(ind), false})
 	return c
 }
 
-// Wrapper for testing.Error with message adjusted to not equality,
-// with possibility to provide custom message.
+// CheckFalseE is a wrapper for testing.Error. It is intended for
+// usage when result is expected to be different than specified value.
+// It takes as arguments: pointer to *testing.T object,
+// bool value representing result of test comparison, expected value,
+// custom error message and optionally indexes for table tests.
 func CheckFalseE(t *testing.T, c bool, e interface{},
 	msg string, ind ...int) bool {
 	assert(t.Errorf, c, arg{e, nil, msg, []int(ind), false})
 	return c
 }
 
-// Wrapper for testing.Fatal with message adjusted to not equality.
+// AssertFalse is a wrapper for testing.Fatal. It is intended for
+// usage when result is expected to be different than specified value.
+// It takes as arguments: pointer to *testing.T object,
+// bool value representing result of test comparison, expected value
+// and optionally indexes for table tests.
 func AssertFalse(t *testing.T, c bool, e interface{}, ind ...int) {
 	assert(t.Fatalf, c, arg{e, nil, "", []int(ind), false})
 }
 
-// Wrapper for testing.Fatal with message adjusted to not equality,
-// with possibility to provide custom message.
+// AssertFalseE is a wrapper for testing.Fatal. It is intended for
+// usage when result is expected to be different than specified value.
+// It takes as arguments: pointer to *testing.T object,
+// bool value representing result of test comparison, expected value,
+// custom error message and optionally indexes for table tests.
 func AssertFalseE(t *testing.T, c bool, e interface{}, msg string, ind ...int) {
 	assert(t.Fatalf, c, arg{e, nil, msg, []int(ind), false})
 }
