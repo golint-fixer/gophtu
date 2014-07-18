@@ -24,11 +24,16 @@ func init() {
 }
 
 type arg struct {
+	// Expected represents expected value
 	Expected interface{}
-	Got      interface{}
-	Msg      string
-	Ind      []int
-	ExpRes   bool
+	// Got represents obtained value.
+	Got interface{}
+	// Msg represents custom error message.
+	Msg string
+	// Ind represents slice of indexes (useful for table tests).
+	Ind []int
+	// ExpRes represents expected result of comparison.
+	ExpRes bool
 }
 
 func assert(f func(string, ...interface{}), c bool, a arg) {
