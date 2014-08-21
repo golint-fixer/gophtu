@@ -72,8 +72,8 @@ func Test_assert(t *testing.T) {
 			if len(tokens) < 2 {
 				t.Fatalf("expecte len(tokens)>1; got %d", len(tokens))
 			}
-			if !filepath.IsAbs(filepath.FromSlash(strings.Join(tokens[0:1], ":"))) {
-				t.Errorf("expected filepath.Abs(%s)=true", strings.Join(tokens[0:1], ":"))
+			if !filepath.IsAbs(filepath.FromSlash(strings.Join(tokens[0:2], ":"))) {
+				t.Errorf("expected filepath.Abs(%s)=true", strings.Join(tokens[0:2], ":"))
 			}
 		}
 	}
