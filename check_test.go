@@ -69,11 +69,11 @@ func Test_assert(t *testing.T) {
 		}
 		if st != err {
 			tokens := strings.Split(st, ":")
-			if len(tokens) == 0 {
-				t.Fatalf("expecte len(tokens)=0; got %d", len(tokens))
+			if len(tokens) < 2 {
+				t.Fatalf("expecte len(tokens)>1; got %d", len(tokens))
 			}
-			if !filepath.IsAbs(filepath.FromSlash(tokens[0])) {
-				t.Errorf("expected filepath.Abs(%s)=true", tokens[0])
+			if !filepath.IsAbs(filepath.FromSlash(strings.Join(tokens[0:1], ":"))) {
+				t.Errorf("expected filepath.Abs(%s)=true", strings.Join(tokens[0:1], ":"))
 			}
 		}
 	}

@@ -10,9 +10,13 @@ install:
  - go get github.com/golang/lint/golint
  - go get -v ./...
  - go install -a -race std
+ - go get code.google.com/p/go.tools/cmd/cover
+ - go get github.com/mattn/goveralls
+ - go get github.com/modocache/gover
  - export PATH=${PATH}:${HOME}/gopath/bin
 
 script:
  - go tool vet -all .
  - golint .
- - go test -v -race ./...
+ - go test -v -race ./... -coverprofile=.coverprofile
+ - goveralls -coverprofile=.coverprofile -service=travis-ci -repotoken $COVERALLS_TOKEN
