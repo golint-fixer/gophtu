@@ -64,8 +64,8 @@ func Test_assert(t *testing.T) {
 		if err != "" {
 			err = fmt.Sprintf(err, n)
 		}
-		if !strings.HasPrefix(st, err) {
-			t.Errorf("expected '%v' starts with '%v' (%d)", st, err, i)
+		if !strings.HasSuffix(st, err) {
+			t.Errorf("expected '%v' ends with '%v' (%d)", st, err, i)
 		}
 		if st != err {
 			tokens := strings.Split(st, ":")
@@ -73,7 +73,7 @@ func Test_assert(t *testing.T) {
 				t.Fatalf("expecte len(tokens)=0; got %d", len(tokens))
 			}
 			if !filepath.IsAbs(filepath.FromSlash(tokens[0])) {
-				t.Errorf("expected filepath.Abs(tokens[0])=true")
+				t.Errorf("expected filepath.Abs(%s)=true", tokens[0])
 			}
 		}
 	}
