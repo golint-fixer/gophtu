@@ -2,6 +2,7 @@ package gophtu
 
 import (
 	"fmt"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"testing"
@@ -63,8 +64,17 @@ func Test_assert(t *testing.T) {
 		if err != "" {
 			err = fmt.Sprintf(err, n)
 		}
-		if err != st {
-			t.Errorf("expected '%v' equal '%v' (%d)", err, st, i)
+		if !strings.HasPrefix(st, err) {
+			t.Errorf("expected '%v' starts with '%v' (%d)", st, err, i)
+		}
+		if st != err {
+			tokens := strings.Split(st, ":")
+			if len(tokens) == 0 {
+				t.Fatalf("expecte len(tokens)=0; got %d", len(tokens))
+			}
+			if !filepath.IsAbs(tokens[0]) {
+				t.Errorf("expected filepath.Abs(tokens[0])=true")
+			}
 		}
 	}
 }
