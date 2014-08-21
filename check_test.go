@@ -72,7 +72,7 @@ func Test_assert(t *testing.T) {
 			if len(tokens) == 0 {
 				t.Fatalf("expecte len(tokens)=0; got %d", len(tokens))
 			}
-			if !filepath.IsAbs(tokens[0]) {
+			if !filepath.IsAbs(filepath.FromSlash(tokens[0])) {
 				t.Errorf("expected filepath.Abs(tokens[0])=true")
 			}
 		}
