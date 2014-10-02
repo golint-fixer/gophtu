@@ -11,6 +11,7 @@ import (
 )
 
 func Test_Timeout(t *testing.T) {
+	t.Parallel()
 	timeouts[regexp.MustCompile("gophtu.Test_Timeout")] = time.Minute
 	timeouts[regexp.MustCompile("gophtu.Test_Timeout2")] = time.Hour
 	timeouts[regexp.MustCompile("gophtu.Test_Timeou.*")] = 2 * time.Hour
@@ -19,6 +20,7 @@ func Test_Timeout(t *testing.T) {
 }
 
 func Test_process(t *testing.T) {
+	t.Parallel()
 	cfg := []struct {
 		env string
 		res map[*regexp.Regexp]time.Duration

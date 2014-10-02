@@ -29,6 +29,7 @@ func lineNo() int {
 }
 
 func Test_assert(t *testing.T) {
+	t.Parallel()
 	cfg := []struct {
 		err string
 		c   bool
