@@ -52,9 +52,9 @@ func assert(f func(string, ...interface{}), c bool, a arg) {
 			file = "???"
 			line = 1
 		}
-		// Really shouldn't do that, but wth for now.
 		// It is stripping `file:line` prefix from original testing package.
-		f("\b\b\b\b\b\b\b\b\b\b\b\b\b%s:%d: %q", file, line, b.String())
+		// TODO: Does not work on Windows.
+		f("\r\t%s:%d: %q", file, line, b.String())
 	}
 }
 

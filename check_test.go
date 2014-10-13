@@ -60,7 +60,7 @@ func Test_assert(t *testing.T) {
 	for i, cfg := range cfg {
 		var s string
 		n := runAssert(assert, mock, &s, cfg.c, cfg.a)
-		st := strings.TrimLeft(s, "\b")
+		st := strings.TrimPrefix(s, "\r\t")
 		err := cfg.err
 		if err != "" {
 			err = fmt.Sprintf(err, n)
