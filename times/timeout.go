@@ -1,4 +1,4 @@
-package gophtu
+package times
 
 import (
 	"errors"

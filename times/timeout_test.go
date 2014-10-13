@@ -1,4 +1,4 @@
-package gophtu
+package times
 
 import (
 	"errors"
@@ -8,15 +8,17 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/pblaszczyk/gophtu/asserts"
 )
 
 func Test_Timeout(t *testing.T) {
 	t.Parallel()
-	timeouts[regexp.MustCompile("gophtu.Test_Timeout")] = time.Minute
-	timeouts[regexp.MustCompile("gophtu.Test_Timeout2")] = time.Hour
-	timeouts[regexp.MustCompile("gophtu.Test_Timeou.*")] = 2 * time.Hour
+	timeouts[regexp.MustCompile("times.Test_Timeout")] = time.Minute
+	timeouts[regexp.MustCompile("times.Test_Timeout2")] = time.Hour
+	timeouts[regexp.MustCompile("times.Test_Timeou.*")] = 2 * time.Hour
 	tT := Timeout()
-	Check(t, tT == 2*time.Hour, tT, 2*time.Hour)
+	asserts.Check(t, tT == 2*time.Hour, tT, 2*time.Hour)
 }
 
 func Test_process(t *testing.T) {
@@ -75,13 +77,13 @@ func Test_process(t *testing.T) {
 	for i := range cfg {
 		timeouts = make(map[*regexp.Regexp]time.Duration)
 		err := process(cfg[i].env)
-		Assert(t, (cfg[i].err == nil) == (err == nil), cfg[i].err, err, i)
+		asserts.Assert(t, (cfg[i].err == nil) == (err == nil), cfg[i].err, err, i)
 		if cfg[i].err != nil {
-			Assert(t, strings.HasPrefix(err.Error(), cfg[i].err.Error()),
+			asserts.Assert(t, strings.HasPrefix(err.Error(), cfg[i].err.Error()),
 				cfg[i].err, err, i)
 			continue
 		}
-		Assert(t, len(timeouts) == len(cfg[i].res), len(cfg[i].res),
+		asserts.Assert(t, len(timeouts) == len(cfg[i].res), len(cfg[i].res),
 			len(timeouts), i)
 		for k, v := range cfg[i].res {
 			found := false
@@ -91,7 +93,7 @@ func Test_process(t *testing.T) {
 					break
 				}
 			}
-			AssertE(t, found, true, found,
+			asserts.AssertE(t, found, true, found,
 				fmt.Sprintf("key: %v; val: %v => map: %v", k, v, timeouts), i)
 		}
 	}
