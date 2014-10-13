@@ -1,4 +1,4 @@
-package gophtu
+package asserts
 
 import (
 	"fmt"
@@ -36,23 +36,23 @@ func Test_assert(t *testing.T) {
 		a   arg
 	}{
 		{"", true, arg{ExpRes: true}},
-		{"check_test.go:%d: \"want: '2', got: '3'\"", false,
+		{"assert_test.go:%d: \"want: '2', got: '3'\"", false,
 			arg{ExpRes: true, Expected: 2, Got: 3}},
-		{"check_test.go:%d: \"want: '3', got: '4', err: 'ziemniak'\"", false,
+		{"assert_test.go:%d: \"want: '3', got: '4', err: 'ziemniak'\"", false,
 			arg{ExpRes: true, Expected: 3, Got: 4, Msg: "ziemniak"}},
-		{"check_test.go:%d: \"want: '3', got: '4', Ind: 2 4, err: 'ziemniak'\"",
+		{"assert_test.go:%d: \"want: '3', got: '4', Ind: 2 4, err: 'ziemniak'\"",
 			false, arg{ExpRes: true, Expected: 3, Got: 4,
 				Msg: "ziemniak", Ind: []int{2, 4}}},
-		{"check_test.go:%d: \"want: '3', got: '4', Ind: 3 5\"", false,
+		{"assert_test.go:%d: \"want: '3', got: '4', Ind: 3 5\"", false,
 			arg{ExpRes: true, Expected: 3, Got: 4, Ind: []int{3, 5}}},
-		{"check_test.go:%d: \"want: result different than '5', Ind: 2 3\"", true,
+		{"assert_test.go:%d: \"want: result different than '5', Ind: 2 3\"", true,
 			arg{ExpRes: false, Expected: 5, Ind: []int{2, 3}}},
-		{"check_test.go:%d: \"want: result different than '5'\"", true,
+		{"assert_test.go:%d: \"want: result different than '5'\"", true,
 			arg{ExpRes: false, Expected: 5}},
-		{"check_test.go:%d: \"want: result different than '5', err: " +
+		{"assert_test.go:%d: \"want: result different than '5', err: " +
 			"'I am the error'\"", true, arg{ExpRes: false, Expected: 5,
 			Msg: "I am the error"}},
-		{"check_test.go:%d: \"want: result different than '5', Ind: 2 3 4, " +
+		{"assert_test.go:%d: \"want: result different than '5', Ind: 2 3 4, " +
 			"err: 'mSg a'\"", true, arg{ExpRes: false, Expected: 5,
 			Msg: "mSg a", Ind: []int{2, 3, 4}}},
 	}

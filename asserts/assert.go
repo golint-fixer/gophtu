@@ -1,4 +1,4 @@
-package gophtu
+package asserts
 
 import (
 	"bytes"
