@@ -2,7 +2,6 @@ package asserts
 
 import (
 	"fmt"
-	"path/filepath"
 	"runtime"
 	"strings"
 	"testing"
@@ -30,7 +29,7 @@ func lineNo() int {
 
 func Test_assert(t *testing.T) {
 	t.Parallel()
-	cfg := []struct {
+	cases := []struct {
 		err string
 		c   bool
 		a   arg
@@ -57,25 +56,16 @@ func Test_assert(t *testing.T) {
 			Msg: "mSg a", Ind: []int{2, 3, 4}}},
 	}
 
-	for i, cfg := range cfg {
+	for i, cas := range cases {
 		var s string
-		n := runAssert(assert, mock, &s, cfg.c, cfg.a)
+		n := runAssert(assert, mock, &s, cas.c, cas.a)
 		st := strings.TrimPrefix(s, "\r\t")
-		err := cfg.err
+		err := cas.err
 		if err != "" {
 			err = fmt.Sprintf(err, n)
 		}
-		if !strings.HasSuffix(st, err) {
-			t.Errorf("expected '%v' ends with '%v' (%d)", st, err, i)
-		}
-		if st != err {
-			tokens := strings.Split(st, ":")
-			if len(tokens) < 2 {
-				t.Fatalf("expecte len(tokens)>1; got %d", len(tokens))
-			}
-			if !filepath.IsAbs(filepath.FromSlash(strings.Join(tokens[0:2], ":"))) {
-				t.Errorf("expected filepath.Abs(%s)=true", strings.Join(tokens[0:2], ":"))
-			}
+		if err != st {
+			t.Errorf("want err=st; got %v!=%v (id:%d)", err, st, i)
 		}
 	}
 }

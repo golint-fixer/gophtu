@@ -13,7 +13,6 @@ import (
 )
 
 func Test_Timeout(t *testing.T) {
-	t.Parallel()
 	timeouts[regexp.MustCompile("times.Test_Timeout")] = time.Minute
 	timeouts[regexp.MustCompile("times.Test_Timeout2")] = time.Hour
 	timeouts[regexp.MustCompile("times.Test_Timeou.*")] = 2 * time.Hour
@@ -22,8 +21,7 @@ func Test_Timeout(t *testing.T) {
 }
 
 func Test_process(t *testing.T) {
-	t.Parallel()
-	cfg := []struct {
+	cases := []struct {
 		env string
 		res map[*regexp.Regexp]time.Duration
 		err error
@@ -74,18 +72,18 @@ func Test_process(t *testing.T) {
 			errors.New("gophtu: invalid timeout setting: *23s"),
 		},
 	}
-	for i := range cfg {
+	for i, cas := range cases {
 		timeouts = make(map[*regexp.Regexp]time.Duration)
-		err := process(cfg[i].env)
-		asserts.Assert(t, (cfg[i].err == nil) == (err == nil), cfg[i].err, err, i)
-		if cfg[i].err != nil {
-			asserts.Assert(t, strings.HasPrefix(err.Error(), cfg[i].err.Error()),
-				cfg[i].err, err, i)
+		err := process(cas.env)
+		asserts.Assert(t, (cas.err == nil) == (err == nil), cas.err, err, i)
+		if cas.err != nil {
+			asserts.Assert(t, strings.HasPrefix(err.Error(), cas.err.Error()),
+				cas.err, err, i)
 			continue
 		}
-		asserts.Assert(t, len(timeouts) == len(cfg[i].res), len(cfg[i].res),
+		asserts.Assert(t, len(timeouts) == len(cas.res), len(cas.res),
 			len(timeouts), i)
-		for k, v := range cfg[i].res {
+		for k, v := range cas.res {
 			found := false
 			for k1, v1 := range timeouts {
 				if reflect.DeepEqual(*k1, *k) && reflect.DeepEqual(v, v1) {
