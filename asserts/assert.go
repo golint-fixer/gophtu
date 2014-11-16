@@ -9,18 +9,16 @@ import (
 	"text/template"
 )
 
-var templ *template.Template
+var tmpl *template.Template
 
-const (
-	msgFmt = `{{if .ExpRes}}` +
-		`want: {{printf "'%v'" .Expected}}, got: {{printf "'%v'" .Got}}{{else}}` +
-		`want: result different than {{printf "'%v'" .Expected}}{{end}}` +
-		`{{if (len .Ind) ne 0}}, Ind:{{range .Ind}} {{.}}{{end}}` +
-		`{{end}}{{if (len .Msg) ne 0}}, err: '{{.Msg}}'{{end}}`
-)
+const msgFmt = `{{if .ExpRes}}want: {{printf "'%v'" .Expected}}, ` +
+	`got: {{printf "'%v'" .Got}}{{else}}` +
+	`want: result different than {{printf "'%v'" .Expected}}{{end}}` +
+	`{{if (len .Ind) ne 0}}, Ind:{{range .Ind}} {{.}}{{end}}` +
+	`{{end}}{{if (len .Msg) ne 0}}, err: '{{.Msg}}'{{end}}`
 
 func init() {
-	templ = template.Must(template.New("gophtu").Parse(msgFmt))
+	tmpl = template.Must(template.New("gophtu").Parse(msgFmt))
 }
 
 type arg struct {
@@ -39,7 +37,7 @@ type arg struct {
 func assert(f func(string, ...interface{}), c bool, a arg) {
 	if c != a.ExpRes {
 		var b bytes.Buffer
-		if err := templ.Execute(&b, a); err != nil {
+		if err := tmpl.Execute(&b, a); err != nil {
 			panic(err)
 		}
 		// based on "testing" package common.decorate func.
