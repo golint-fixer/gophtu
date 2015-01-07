@@ -9,9 +9,9 @@ env:
   - secure: DmY1RzliNjQMkocUcTiSR76q6ViczW0xDTuHrTgIPvEQcLK2Zup1hg6CgQfy0RyzG2nm3rxHQHBG3KK2j/p23Yz40Qu5WzureBvf72qnp+81YpnqsHLjxUBC+DS2ggAWTaqafqC1sVwoUOt+hcH5RSUSa6zx53mPfYgyQc+8BRg=
 install:
 - mkdir ${HOME}/bin
-- go get code.google.com/p/go.tools/cmd/vet
+- go get golang.org/x/tools/cmd/vet
 - go get github.com/golang/lint/golint
-- go get code.google.com/p/go.tools/cmd/cover
+- go get golang.org/x/tools/cmd/cover
 - go get github.com/mattn/goveralls
 - go get github.com/modocache/gover
 script:
